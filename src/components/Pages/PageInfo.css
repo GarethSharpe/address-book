@@ -1,0 +1,13 @@
+.Info {
+  padding: 4% 5px 5px 5px;
+  width: 45%;
+}
+
+.Info-member {
+  font-size: calc(4px + 2vmin);
+  font-weight: bold;
+}
+
+.Info-other {
+  font-size: calc(7px + 1vmin);
+}

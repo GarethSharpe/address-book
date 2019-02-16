@@ -1,0 +1,24 @@
+.BackPage-header {
+  background-image: url("../../assets/front.jpg");
+  background-repeat: no-repeat;
+  background-size: 150% 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(20px + 2vmin);
+  color: white;
+  font-weight:bold;
+  text-align: center;
+}
+
+.BackPage-subheader {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(6px + 2vmin);
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+}

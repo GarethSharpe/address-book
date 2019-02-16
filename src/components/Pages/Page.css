@@ -1,0 +1,10 @@
+.Page {
+  min-height: 100vh;
+  flex-direction: column;
+  color: white;
+}
+
+.Page-container {
+  display: flex;
+  justify-content: center;
+}
