@@ -18,4 +18,4 @@
 npm-debug.log*
 
 .firebaserc
-
+database.rules.json

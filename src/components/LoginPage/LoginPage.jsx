@@ -16,10 +16,7 @@ import CardFooter from "../Card/CardFooter.jsx";
 import CustomInput from "../CustomInput/CustomInput.jsx";
 
 import loginPageStyle from "./loginPageStyle.jsx";
-
 import image from "../../assets/bg7.jpg";
-
-
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -36,8 +33,18 @@ class LoginPage extends React.Component {
       700
     );
   }
+  getRegisterButton(register) {
+    const d = new Date();
+    const month = d.getMonth();
+    if (month === 0 || month === 1 || month === 2) {
+      return (
+      <Button simple color="warning" size="lg" onClick={register}>
+        Don't have an account yet? Register.
+      </Button>)
+    }
+  }
   render() {
-    const { classes, login } = this.props;
+    const { classes, login, register } = this.props;
     return (
       <div>
         <div
@@ -98,6 +105,9 @@ class LoginPage extends React.Component {
                     </CardFooter>
                   </form>
                 </Card>
+                <CardFooter className={classes.cardFooter}>
+                    {this.getRegisterButton(register)}
+                </CardFooter>
               </GridItem>
             </GridContainer>
           </div>

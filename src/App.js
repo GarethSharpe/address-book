@@ -36,6 +36,22 @@ class App extends Component {
       })
     }
   }
+  async register() {
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const rv = await FirebaseAPI.signIn(email.value, password.value);
+    if (rv.user) { 
+      this.setState({ 
+        isLoggedIn: true,
+        invalidCredentials: false,
+       })
+    } else {
+      this.setState({
+        invalidCredentials: true,
+        errorMessage: rv.message,
+      })
+    }
+  }
   componentDidMount = async () => {
     const members = await FirebaseAPI.getMembers();
     members.reduce((all, one, i) => {
@@ -57,7 +73,7 @@ class App extends Component {
     } else {
       app.push(
         <SnackBar message={this.state.errorMessage} open={this.state.invalidCredentials}/>,
-        <LoginPage login={this.login.bind(this)} />,
+        <LoginPage login={this.login.bind(this)} register={this.register.bind(this)} />,
       )
     }
     return app;

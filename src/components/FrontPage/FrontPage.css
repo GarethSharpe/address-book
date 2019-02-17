@@ -1,5 +1,5 @@
 .FrontPage-header {
-    background-image:  url("../../assets/leaves.jpeg");
+    background-image:  url("../../assets/february.jpeg");
     background-size: 150% 100%;
     background-repeat: no-repeat;
     min-height: 100vh;
@@ -13,12 +13,17 @@
     text-align: center;
   }
 
-  .FrontPage-subheader {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(6px + 2vmin);
-    color: white;
-    text-align: center;
-    padding-top: 15px;
-  }
+.FrontPage-subheader {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(6px + 2vmin);
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.FrontPage-button-menu {
+  display: inline-flex;
+  padding-top: 10%;
+}

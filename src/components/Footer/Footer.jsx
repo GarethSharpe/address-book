@@ -24,7 +24,7 @@ function Footer({ ...props }) {
   return (
     <footer className={footerClasses}>
       <div className={classes.container}>
-        <div className={classes.left}>
+        <div className={classes.center}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
               <a
@@ -46,7 +46,7 @@ function Footer({ ...props }) {
             </ListItem>
           </List>
         </div>
-        <div className={classes.right}>
+        <div className={classes.center}>
           made with{" "}
           <Favorite className={classes.icon} /> by{" "}
           <a

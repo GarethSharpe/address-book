@@ -12,7 +12,7 @@ firebase.initializeApp(config);
 class FirebaseAPI {
 
   static async getMembers() {
-    const snapshot = await firebase.database().ref(`/`).once("value");
+    const snapshot = await firebase.database().ref('/').orderByChild("member").once("value");
     const data = snapshot.val();
 		const list = Object.keys(data).map((key) => data[key]);
 		list.forEach((value) => {
@@ -23,6 +23,24 @@ class FirebaseAPI {
 	
 	static async signIn(email, password) {
 		const rv = await firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+			return error;
+		});
+		return rv;
+	}
+
+	static async createUser(email, password) {
+		const rv = await firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+			return error;
+		});
+		return rv;
+	}
+
+	static getCurrentUser() {
+		return firebase.auth().currentUser;
+	}
+
+	static async createFamily(family) {
+		const rv = await firebase.database().ref('/').push(family).catch((error) => {
 			return error;
 		});
 		return rv;
