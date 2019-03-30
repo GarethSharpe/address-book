@@ -12,12 +12,17 @@ firebase.initializeApp(config);
 class FirebaseAPI {
 
   static async getMembers() {
-    const snapshot = await firebase.database().ref('/').orderByChild("member").once("value");
-    const data = snapshot.val();
-		const list = Object.keys(data).map((key) => data[key]);
-		list.forEach((value) => {
-			value.ts = new Date(value.ts).toLocaleTimeString();
-    });
+    const snapshot = await firebase.database().ref('/members').once("value");
+		const data = snapshot.val();
+		const list = Object.keys(data).map((key) => { 
+			data[key].key = key;
+			return data[key] 
+		});
+		list.sort((a, b) => {
+			if (a.member < b.member) return -1;
+			if (a.member > b.member) return 1;
+			return 0;
+		});
 		return list;
 	}
 	
@@ -40,10 +45,47 @@ class FirebaseAPI {
 	}
 
 	static async createFamily(family) {
-		const rv = await firebase.database().ref('/').push(family).catch((error) => {
+		const rv = await firebase.database().ref('/members').push(family).catch((error) => {
 			return error;
 		});
 		return rv;
+	}
+
+	static async updateFamily(key, family) {
+		firebase.database().ref(`/members/${key}`).set(family).catch((error) => {
+			return error;
+		});
+		return true;
+	}
+
+	static async deleteFamily(key) {
+		firebase.database().ref(`/members/${key}`).remove().catch((error) => {
+			return error;
+		});
+		return true;
+	}
+
+	static async isRegistrationOpen() {
+		const snapshot = await firebase.database().ref("/registration").once("value");
+		const isRegistrationOpen = snapshot.val();
+		return isRegistrationOpen;
+	}
+
+	static async toggleRegistration(isRegistrationOpen) {
+		await firebase.database().ref("/registration").set(isRegistrationOpen)
+	}
+
+	static async setAdmin(adminEmail) {
+		await firebase.database().ref("/admins").push(adminEmail);
+	}
+
+	static async getAdmins() {
+		const snapshot = await firebase.database().ref('/admins').once("value");
+		const data = snapshot.val();
+		const list = Object.keys(data).map((key) => { 
+			return data[key] 
+		});
+		return list;
 	}
   
 }

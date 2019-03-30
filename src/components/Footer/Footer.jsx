@@ -48,14 +48,14 @@ function Footer({ ...props }) {
         </div>
         <div className={classes.center}>
           made with{" "}
-          <Favorite className={classes.icon} /> by{" "}
-          <a
+          <Favorite className={classes.icon} /> by Gareth Sharpe
+          {/* <a
             href="https://www.linkedin.com/in/garethsharpe/"
             className={aClasses}
             target="_blank"
           >
             Gareth Sharpe
-          </a>{" "}
+          </a>{" "} */}
         </div>
       </div>
     </footer>

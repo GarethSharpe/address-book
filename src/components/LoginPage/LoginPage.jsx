@@ -15,6 +15,8 @@ import CardHeader from "../Card/CardHeader.jsx";
 import CardFooter from "../Card/CardFooter.jsx";
 import CustomInput from "../CustomInput/CustomInput.jsx";
 
+import FirebaseAPI from "../../api/firebase";
+
 import loginPageStyle from "./loginPageStyle.jsx";
 import image from "../../assets/bg7.jpg";
 
@@ -23,9 +25,12 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       cardAnimaton: "cardHidden",
+      isRegistrationOpen: false,
     };
   }
-  componentDidMount() {
+  componentDidMount = async () => {
+    const registrationOpen = await FirebaseAPI.isRegistrationOpen();
+    this.setState({ isRegistrationOpen: registrationOpen });
     setTimeout(
       function() {
         this.setState({ cardAnimaton: "" });
@@ -33,13 +38,11 @@ class LoginPage extends React.Component {
       700
     );
   }
-  getRegisterButton(register) {
-    const d = new Date();
-    const month = d.getMonth();
-    if (month === 0 || month === 1 || month === 2) {
+  getRegisterButton = (register) => {
+    if (this.state.isRegistrationOpen) {
       return (
       <Button simple color="warning" size="lg" onClick={register}>
-        Don't have an account yet? Register.
+        Register
       </Button>)
     }
   }
@@ -63,10 +66,10 @@ class LoginPage extends React.Component {
                     <CardHeader color="primary" className={classes.cardHeader}>
                       <h1>Login</h1>
                     </CardHeader>
-                    <p className={classes.divider}>Kitchener Gospel Hall Address Book</p>
+                    <p className={classes.divider}>Kitchener Gospel Hall Directory</p>
                     <CardBody>
                       <CustomInput
-                        labelText="Email..."
+                        labelText="Email"
                         id="email"
                         name="email"
                         formControlProps={{
@@ -100,14 +103,12 @@ class LoginPage extends React.Component {
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="primary" size="lg" onClick={login}>
-                        Access Address Book
+                        Login
                       </Button>
+                      {this.getRegisterButton(register)}
                     </CardFooter>
                   </form>
                 </Card>
-                <CardFooter className={classes.cardFooter}>
-                    {this.getRegisterButton(register)}
-                </CardFooter>
               </GridItem>
             </GridContainer>
           </div>

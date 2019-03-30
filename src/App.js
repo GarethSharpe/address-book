@@ -9,7 +9,8 @@ import SnackBar from "./components/SnackBar/SnackBar";
 
 class App extends Component {
   state = { 
-    members: [[]],
+    members: [],
+    chunks: [[]],
     isLoggedIn: false,
     invalidCredentials: false,
     errorMessage: "",
@@ -39,7 +40,7 @@ class App extends Component {
   async register() {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
-    const rv = await FirebaseAPI.signIn(email.value, password.value);
+    const rv = await FirebaseAPI.createUser(email.value, password.value);
     if (rv.user) { 
       this.setState({ 
         isLoggedIn: true,
@@ -60,19 +61,22 @@ class App extends Component {
       return all
     }, []);
     const chunks = this.chunk(members, 6);
-    this.setState({ members: chunks })
+    this.setState({
+      members: members,
+      chunks: chunks
+    });
   }
   conditionalRender = () => {
     const app = [ ];
     if (this.state.isLoggedIn) {
       app.push(
-        <FrontPage />,
-        <Pages members={this.state.members} />,
+        <FrontPage members={this.state.members} />,
+        <Pages members={this.state.chunks} />,
         <BackPage />,
       )
     } else {
       app.push(
-        <SnackBar message={this.state.errorMessage} open={this.state.invalidCredentials}/>,
+        <SnackBar message={this.state.errorMessage} open={this.state.invalidCredentials} />,
         <LoginPage login={this.login.bind(this)} register={this.register.bind(this)} />,
       )
     }

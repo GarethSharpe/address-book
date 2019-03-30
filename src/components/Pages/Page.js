@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Page.css';
 import PageInfo from './PageInfo';
-import * as randomColour from "random-material-color";
 
 class Page extends Component {
 
@@ -21,7 +20,11 @@ class Page extends Component {
 
   render() {;
     const { chunk } = this.props;
-    const colour = randomColour.getColor();
+    const colours = [ 
+      "#78909c", "#607d8b", "#546e7a",
+      "#455a64", "#37474f", "#263238",
+     ]
+    const colour = colours[Math.floor(Math.random() * colours.length)];
     return (
       <div className="Page" style={{backgroundColor: colour}}>
         {this.createInfo(chunk)}

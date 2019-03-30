@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/PersonAdd';
 import FirebaseAPI from "../../api/firebase";
 import SnackBar from "../SnackBar/SnackBar";
 
@@ -57,7 +57,7 @@ class MemberCreate extends Component {
     const { classes, disabled } = this.props;
     return (
       <div>
-        <SnackBar message={this.state.errorMessage} open={this.state.invalidCreate} />,
+        <SnackBar message={this.state.errorMessage} open={this.state.invalidCreate} />
         <Fab color="primary" 
              disabled={disabled}
              size="small" 
@@ -114,7 +114,6 @@ class MemberCreate extends Component {
               margin="dense"
               id="email1"
               label="First Email Address"
-              type="email"
               fullWidth
               className={classes.textField}
             />
@@ -123,7 +122,6 @@ class MemberCreate extends Component {
               margin="dense"
               id="email2"
               label="Second Email Address"
-              type="email"
               fullWidth
               className={classes.textField}
             />
@@ -132,7 +130,6 @@ class MemberCreate extends Component {
               margin="normal"
               id="phone"
               label="Home Phone Number"
-              type="tel"
               placeholder="xxx-xxx-xxxx"
               fullWidth
               className={classes.textField}
@@ -142,7 +139,6 @@ class MemberCreate extends Component {
               margin="normal"
               id="cell1"
               label="First Mobile Number"
-              type="tel"
               placeholder="xxx-xxx-xxxx"
               fullWidth
               className={classes.textField}
@@ -152,7 +148,6 @@ class MemberCreate extends Component {
               margin="normal"
               id="cell2"
               label="Second Mobile Number"
-              type="tel"
               placeholder="xxx-xxx-xxxx"
               fullWidth
               className={classes.textField}

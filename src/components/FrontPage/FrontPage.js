@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './FrontPage.css';
 import FirebaseAPI from '../../api/firebase';
-import MemberCreate from "../MemberCreate/MemberCreate";
-
 import january from "../../assets/january.jpeg";
 import february from "../../assets/february.jpeg";
 import march from "../../assets/march.jpeg";
@@ -15,30 +13,66 @@ import september from "../../assets/september.jpeg";
 import october from "../../assets/october.jpeg";
 import november from "../../assets/november.jpeg";
 import december from "../../assets/december.jpeg";
+import MemberCreate from "../MemberCreate/MemberCreate";
 import MemberUpdate from '../MemberUpdate/MemberUpdate';
 import MemberDelete from '../MemberDelete/MemberDelete';
+import MemberSelfServe from '../MemberSelfServe/MemberSelfServe';
+import AdminCreate from "../AdminCreate/AdminCreate";
+import ToggleRegistraion from "../ToggleRegistration/Toggle";
 
 const months = [ 
   january, february, march, april, may, june, july,
   august, september, october, november, december
 ]
 
-const admins = [ "garethjsharpe@gmail.com", "steve5aiken@gmail.com" ];
-
 class FrontPage extends Component {
   state = {
     isAdmin: false,
+    isInDirectory: false,
+    member: { },
   }
-  componentDidMount = () => {
+  getAdminPanel = (members) => {
+    const adminPanel = [ ];
+    if (this.state.isAdmin) {
+      adminPanel.push(
+        <MemberCreate />,
+        <MemberUpdate members={members} />,
+        <MemberDelete members={members} />,
+        <AdminCreate />,
+        <ToggleRegistraion />
+      )
+    }
+    return adminPanel;
+  }
+  getSelfServePanel = () => {
+    const selfServePanel = [ ];
+    if (!this.state.isAdmin && this.state.isInDirectory) {
+      selfServePanel.push(
+        <MemberSelfServe member={this.state.member} />
+      )
+    }
+    return selfServePanel;
+  }
+  componentDidMount = async () => {
     const currentUser = FirebaseAPI.getCurrentUser();
+    const admins = await FirebaseAPI.getAdmins();
     admins.forEach((admin) => {
       if (currentUser.email === admin) {
-        this.setState({ isAdmin: true })
+        this.setState({ isAdmin: true });
       }
     });
+    this.props.members.forEach((member) => {
+      if (member.email1 === currentUser.email || member.email2 === currentUser.email) {
+        this.setState({
+          isInDirectory: true,
+          member,
+        });
+        return;
+      }
+    })
   }
   render() {
-    
+    const { members } = this.props;
     const date = new Date()
     const image = months[date.getMonth()];
     return (
@@ -50,9 +84,8 @@ class FrontPage extends Component {
           Address Book
         </header>
           <div className="FrontPage-button-menu">
-            <MemberCreate disabled={!this.state.isAdmin} />
-            <MemberUpdate disabled={!this.state.isAdmin} />
-            <MemberDelete disabled={!this.state.isAdmin} />
+            {this.getAdminPanel(members)}
+            {this.getSelfServePanel()}
           </div>
         </header>
       </div>

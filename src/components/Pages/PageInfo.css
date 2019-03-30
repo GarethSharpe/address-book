@@ -11,3 +11,7 @@
 .Info-other {
   font-size: calc(7px + 1vmin);
 }
+
+a {
+  color: #FFFFFF
+}
